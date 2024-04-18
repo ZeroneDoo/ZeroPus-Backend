@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('ulasans', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained()->onDelete("cascade");
             $table->foreignId("book_id")->constrained()->onDelete("cascade");
-            $table->integer("freezed_credit")->default(0);
-            $table->timestamp("tgl_pengembalian")->nullable()->index();
-            $table->string("photo")->nullable();
-            $table->string("status")->nullable()->index();
-            $table->string("description")->nullable();
+            $table->integer("rate")->default(0);
+            $table->text("description")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('ulasans');
     }
 };

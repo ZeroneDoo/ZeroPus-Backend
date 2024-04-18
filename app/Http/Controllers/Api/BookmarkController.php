@@ -13,9 +13,10 @@ class BookmarkController extends Controller
     public function index(Request $request) 
     {
         $user = User::find(auth()->user()->id);
-        $bookId = $user->bookmark()->get()->pluck("book_id")->toArray();
+        $data = $user->bookmark()->with("book", "user")->paginate($request->limit ?? 20);
+        // $bookId = $user->bookmark()->get()->pluck("book_id")->toArray();
 
-        $data = Book::whereIn("id",$bookId)->paginate($request->limit ?? 20);
+        // $data = Book::whereIn("id",$bookId)->paginate($request->limit ?? 20);
 
         return response()->json($data);
     }

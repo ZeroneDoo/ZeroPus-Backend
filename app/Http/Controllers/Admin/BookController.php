@@ -27,8 +27,6 @@ class BookController extends Controller
             "penerbit" => "required",
         ]);
 
-        dd($request->all());
-
         $file = [];
         if($request->hasFile("source")) {
             $file['source'] = Storage::disk("public")->put("book/source", $request->source);
@@ -91,9 +89,11 @@ class BookController extends Controller
         }else{
             $file['photo'] = null;
         }
-        $category = $this->insertOrDelete($request->category, $book);
-        if(!$category) {
-            return response()->json(["message" => "Failed update book"], 500);
+        if($request->category) {
+            $category = $this->insertOrDelete($request->category, $book);
+            if(!$category) {
+                return response()->json(["message" => "Failed update book"], 500);
+            }
         }
 
         $data = $book->update([
@@ -188,7 +188,7 @@ class BookController extends Controller
                     "source" => $data->source,
                     "photo" => $data->photo,
                     "category" => $data->category()->get()->pluck("id"),
-                    "is_rent" => $data->is_rent === 1 ? true : false,
+                    "is_rent" => $data->is_rent,
                     "stock" => $data->stock,
                     "tahun_terbit" => $data->tahun_terbit,
                     "action" => "

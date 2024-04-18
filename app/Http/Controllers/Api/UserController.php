@@ -13,7 +13,8 @@ class UserController extends Controller
     public function show()
     {
         $data = auth()->user();
-
+        $data->token = request()->bearerToken();
+        
         return response()->json($data);
     }
 
@@ -49,8 +50,8 @@ class UserController extends Controller
             }
         }
 
-
         $user->update($data);
         
+        return response()->json($user);
     }
 }

@@ -287,9 +287,9 @@
             form.find("#selectedImage").attr("src",dataTable['photo'])
             if(indexSoure !== -1) {
                 form.find("#resultSource").html(`
-                <div style="border: 1px solid #d1d3e2; padding:5px; border-radius: 5px; display: flex; align-items: center; gap:10px">
+                <div style="width: 10%;border: 1px solid #d1d3e2; padding:5px; border-radius: 5px; display: flex; align-items: center; gap:8px">
                     <i class="fas fa-solid fa-file" style="color:red"></i>
-                    <p style="margin: 0">${source}</p>
+                    <p style="margin: 0" class="text-truncate">${source}</p>
                 </div>
                 `)
             }else{
@@ -326,6 +326,7 @@
             $("#btn-submit").html("Save Changes")
             $("#selectedImage").attr("src","https://mdbootstrap.com/img/Photos/Others/placeholder.jpg")
             $("#is_rent").prop("checked", false)
+            form.find("#resultSource").html(``)
 
             $("#modal").modal("hide")
             $('#form input').val('')

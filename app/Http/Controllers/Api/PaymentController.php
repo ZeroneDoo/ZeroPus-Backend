@@ -22,7 +22,7 @@ class PaymentController extends Controller
             "description" => "Zeropus ". Credit::find($req->credit_id)->amount ." Credit",
             "invoice_duration" => $req->invoice_duration,
             "amount" => Credit::find($req->credit_id)->price,
-            "success_redirect_url" => url("/success/payment")
+            "success_redirect_url" => $req->success_url ?? url("/success/payment")
         ];
 
         $response = Http::withHeaders([
@@ -98,6 +98,8 @@ class PaymentController extends Controller
                 $user = User::find($payment->user_id);
                 $credit = Credit::find($payment->credit_id);
 
+                // return response()->json(['credit'=>$user->credit + $credit->amount]);
+                
                 $user->update([
                     "credit" => $user->credit + $credit->amount
                 ]);
